@@ -1,0 +1,53 @@
+@import 'tailwindcss';
+
+@plugin "@tailwindcss/typography";
+
+@layer base {
+  h1,
+  h2,
+  h3 {
+    @apply font-serif font-bold tracking-tight text-stone-900;
+  }
+  h4,
+  h5,
+  h6 {
+    @apply font-serif font-normal tracking-tight text-stone-800;
+  }
+  body {
+    @apply bg-warm text-stone-800 font-sans;
+  }
+}
+
+@layer components {
+  .subheading {
+    @apply font-serif font-normal;
+  }
+}
+
+@utility container {
+  margin: 0 auto;
+  padding: 0 2rem;
+  max-width: 80rem;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --shadow-layer: 0 35px 60px -15px rgba(0, 0, 0, 0.3);
+
+  /* Fonts */
+  --font-sans: "Futura", "Futura PT", var(--font-josefin), "Avenir Next", "Avenir", "Century Gothic", "Trebuchet MS", sans-serif;
+  --font-serif: var(--font-josefin);
+  --font-mono: var(--font-ibm-plex-mono);
+
+  /* Art portfolio palette */
+  --color-warm: #fff8f6;
+  --color-accent: #f36421;
+  --color-accent-hover: #d9551a;
+  --color-muted: #9b9b9b;
+
+  --color-black: #212529;
+  --color-white: #ffffff;
+
+  --default-transition-duration: 200ms;
+}
