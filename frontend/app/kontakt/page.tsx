@@ -6,51 +6,27 @@ type Status = 'idle' | 'loading' | 'success' | 'error'
 
 export default function KontaktPage() {
   const [status, setStatus] = useState<Status>('idle')
-  const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setStatus('loading')
-    setErrorMessage(null)
 
     const form = e.currentTarget
     const formData = new FormData(form)
 
-    const payload = {
-      name: String(formData.get('name') || '').trim(),
-      email: String(formData.get('email') || '').trim(),
-      message: String(formData.get('message') || '').trim(),
-      category: 'Kontakt',
-      website: String(formData.get('website') || '').trim(),
-    }
-
-    // Honeypot
-    if (payload.website) {
-      setStatus('error')
-      setErrorMessage('Något gick fel. Försök igen.')
-      return
-    }
-
     try {
-      const res = await fetch('/api/contact', {
+      const res = await fetch('/__forms.html', {
         method: 'POST',
-        headers: {'Content-Type': 'application/json'},
-        body: JSON.stringify(payload),
+        headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+        body: new URLSearchParams(formData as any).toString(),
       })
 
-      if (!res.ok) {
-        const data = (await res.json().catch(() => null)) as {error?: string} | null
-        throw new Error(data?.error || 'Kunde inte skicka meddelandet.')
-      }
-
+      if (!res.ok) throw new Error()
       setStatus('success')
       form.reset()
       window.scrollTo({top: 0, behavior: 'smooth'})
-    } catch (error) {
+    } catch {
       setStatus('error')
-      setErrorMessage(
-        error instanceof Error ? error.message : 'Kunde inte skicka meddelandet.',
-      )
     }
   }
 
@@ -94,7 +70,21 @@ export default function KontaktPage() {
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form
+          name="kontakt"
+          method="POST"
+          data-netlify="true"
+          netlify-honeypot="bot-field"
+          onSubmit={handleSubmit}
+          className="space-y-6"
+        >
+          <input type="hidden" name="form-name" value="kontakt" />
+          <p className="hidden">
+            <label>
+              Fyll inte i detta: <input name="bot-field" />
+            </label>
+          </p>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-1">
               <label className="text-xs uppercase tracking-widest font-medium text-stone-500">
@@ -132,11 +122,10 @@ export default function KontaktPage() {
             />
           </div>
 
-          {/* Honeypot */}
-          <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" />
-
           {status === 'error' && (
-            <div className="text-sm text-red-600 font-medium">{errorMessage}</div>
+            <div className="text-sm text-red-600 font-medium">
+              Kunde inte skicka meddelandet. Försök igen eller maila direkt.
+            </div>
           )}
 
           <button
