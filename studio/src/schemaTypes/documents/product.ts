@@ -1,5 +1,4 @@
 import {BasketIcon} from '@sanity/icons'
-import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 import {defineField, defineType} from 'sanity'
 
 export const product = defineType({
@@ -7,9 +6,7 @@ export const product = defineType({
   title: 'Produkt',
   type: 'document',
   icon: BasketIcon,
-  orderings: [orderRankOrdering],
   fields: [
-    orderRankField({type: 'product'}),
     defineField({
       name: 'title',
       title: 'Namn',
@@ -82,6 +79,10 @@ export const product = defineType({
       type: 'boolean',
       initialValue: false,
     }),
+  ],
+  orderings: [
+    {title: 'Namn A–Ö', name: 'titleAsc', by: [{field: 'title', direction: 'asc'}]},
+    {title: 'Kollektion', name: 'collectionAsc', by: [{field: 'collection', direction: 'asc'}]},
   ],
   preview: {
     select: {title: 'title', price: 'price', media: 'image', soldOut: 'soldOut'},

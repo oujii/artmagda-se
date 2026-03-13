@@ -5,7 +5,6 @@ const dataset = process.env.SANITY_STUDIO_DATASET || 'production'
 
 export default defineCliConfig({
   api: {projectId, dataset},
-  studioHost: 'artmagda',
   deployment: {autoUpdates: false},
   typegen: {
     path: './src/**/*.{ts,tsx,js,jsx}',

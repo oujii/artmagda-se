@@ -1,19 +1,12 @@
 import {BasketIcon, CogIcon, ImageIcon, UserIcon} from '@sanity/icons'
-import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 import type {StructureBuilder, StructureResolver} from 'sanity/structure'
 
-export const structure: StructureResolver = (S: StructureBuilder, context) =>
+export const structure: StructureResolver = (S: StructureBuilder) =>
   S.list()
     .title('Innehåll')
     .items([
       S.documentTypeListItem('project').title('Portfolio').icon(ImageIcon),
-      orderableDocumentListDeskItem({
-        type: 'product',
-        title: 'Butik',
-        icon: BasketIcon,
-        S,
-        context,
-      }),
+      S.documentTypeListItem('product').title('Butik').icon(BasketIcon),
       S.divider(),
       S.listItem()
         .title('Om Magda')
