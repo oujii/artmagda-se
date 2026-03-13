@@ -1,15 +1,13 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Rotens favicon">
-  <rect width="256" height="256" fill="#476949" />
-  <text
-    x="50%"
-    y="53%"
-    text-anchor="middle"
-    dominant-baseline="middle"
-    font-family="Arial, Helvetica, sans-serif"
-    font-size="172"
-    font-weight="700"
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" role="img" aria-label="Art Magda favicon">
+  <rect width="256" height="256" rx="48" fill="#f36421" />
+  <path
+    d="M128 210
+       C120 202 56 156 56 116
+       C56 90 76 70 100 70
+       C114 70 124 78 128 84
+       C132 78 142 70 156 70
+       C180 70 200 90 200 116
+       C200 156 136 202 128 210Z"
     fill="#ffffff"
-  >
-    R
-  </text>
+  />
 </svg>
